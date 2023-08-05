@@ -5,6 +5,8 @@ services:
     container-name: server-debug
     build:
       dockerfile: Dockerfile-debug
+    env_file:
+      - .env
     ports:
-      - "8181:8181"
+      - "${PORT}:${PORT}"
       - "4000:4000"

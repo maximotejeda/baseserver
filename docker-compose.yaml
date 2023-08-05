@@ -5,6 +5,8 @@ services:
     container-name: server
     build:
       dockerfile: Dockerfile
+    env_file:
+      - .env
     ports:
-      - "8181:8181"
+      - "${PORT}:${PORT}"
 
