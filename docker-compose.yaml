@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  server:
+    container-name: server
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+

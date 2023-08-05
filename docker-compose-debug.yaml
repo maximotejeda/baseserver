@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  server-debug:
+    container-name: server-debug
+    build:
+      dockerfile: Dockerfile-debug
+    ports:
+      - "8181:8181"
+      - "4000:4000"
