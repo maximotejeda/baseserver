@@ -1,4 +1,5 @@
 # must create a .env file with info
+# must have compose installed
 include .env
 export
 OS:=${shell go env GOOS}
@@ -11,13 +12,13 @@ SERVICE=server
 CONTAINERS=podman
 .phony: all clean build test clean-image build-image build-image-debug run-image run-image-debug run-local
 
-build-image: clean create-dirs
+build-image: clean 
 	@$(CONTAINERS)-compose -f ./docker-compose.yaml build
 
 run-image: build-image
 	@$(CONTAINERS)-compose -f docker-compose.yaml up
 
-build-image-debug: clean create-dirs
+build-image-debug: clean
 	@$(CONTAINERS)-compose -f docker-compose-debug.yaml build
 
 run-image-debug: build-image-debug
@@ -31,10 +32,8 @@ test:
 	@go test ./$(SERVICE)/...
 clean:
 	@rm -rf ./bin
+
 clean-image:
-	@docker compose -f docker-compose.yaml down
-	@docker compose -f docker-compose-debug.yaml down
-	@docker compose -f docker-compose-debug.yaml rm -fsv
-	@docker compose -f docker-compose.yaml rm -fsv
+	@$(CONTAINERS) system prune -f
 
 
