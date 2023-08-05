@@ -1,0 +1,17 @@
+FROM golang:1.20 as build
+
+WORKDIR /go/src/app
+
+COPY . .
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+RUN go mod download && go mod tidy
+RUN go build -gcflags="all=-N -l" -o /go/bin/server ./
+
+FROM debian:unstable-slim
+COPY --from=build /go/bin/server /
+COPY --from=build /go/bin/dlv /
+
+EXPOSE 4000
+EXPOSE 8181
+
+ENTRYPOINT ["/dlv", "--listen=:4000", "--headless=true", "--api-version=2", "--accept-multiclient", "exec", "/server"]
