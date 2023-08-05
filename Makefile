@@ -8,6 +8,7 @@ OOSS="linux"
 ARRCHS="arm 386"
 DEBUG=1
 SERVICE=server
+VERSION=0.0.0_1
 # can be docker or podman or whatever
 CONTAINERS=podman
 .phony: all clean build test clean-image build-image build-image-debug run-image run-image-debug run-local
@@ -24,12 +25,12 @@ build-image-debug: clean
 run-image-debug: build-image-debug
 	@$(CONTAINERS)-compose -f docker-compose-debug.yaml up
 
-run-local:build
-	@bin/$(SERVICE)-$(OS)-$(ARCH)
+run-local:clean build
+	@bin/$(SERVICE)-$(OS)-$(ARCH)-$(VERSION)
 build:
-	@go build -o ./bin/$(SERVICE)-$(OS)-$(ARCH) ./server.go
+	@go build -o ./bin/$(SERVICE)-$(OS)-$(ARCH)-$(VERSION) ./
 test:
-	@go test ./$(SERVICE)/...
+	@go test ./...
 clean:
 	@rm -rf ./bin
 
