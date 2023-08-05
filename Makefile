@@ -27,3 +27,14 @@ run-local:build
 	@bin/$(SERVICE)-$(OS)-$(ARCH)
 build:
 	@go build -o ./bin/$(SERVICE)-$(OS)-$(ARCH) ./server.go
+test:
+	@go test ./$(SERVICE)/...
+clean:
+	@rm -rf ./bin
+clean-image:
+	@docker compose -f docker-compose.yaml down
+	@docker compose -f docker-compose-debug.yaml down
+	@docker compose -f docker-compose-debug.yaml rm -fsv
+	@docker compose -f docker-compose.yaml rm -fsv
+
+
