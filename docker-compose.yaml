@@ -9,4 +9,18 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    expose:
+      - "9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    user: '1000'
+    #volumes:
+    #  - ./grafana_data:/var/lib/grafana
