@@ -15,10 +15,15 @@ func main() {
 		fmt.Printf("Server running on addr -> %s:%s\n", "localhost", conf["port"])
 	} else {
 		fmt.Printf("Server running on addr -> %s:%s\n", conf["address"], conf["port"])
-
 	}
+
+	// serve static files from static folder on the root of the project
+	fs := http.FileServer(http.Dir("./static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
+
 	http.Handle("/metrics", promhttp.Handler())
-	log.Fatal(http.ListenAndServe(conf["address"]+":"+conf["port"], nil))
+
+	log.Fatal(http.ListenAndServe(conf["address"] + ":" + conf["port"], nil))
 }
 
 // preRun check all necesary env to be present
