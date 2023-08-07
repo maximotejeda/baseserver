@@ -25,6 +25,12 @@ after that the file structure of the project will be present on the folder.
 That file come with a simple configuration, where you set the port and
 address where you intend to run the server.
 #+name: file-contents
-#+BEGIN_SRC shell :wrap example :results output :exports both
+#+BEGIN_SRC sh :wrap example :results output :exports both
  cat ./.env
 #+END_SRC
+
+#+RESULTS: file-contents
+#+begin_example
+ADDR=
+PORT=8181
+#+end_example
