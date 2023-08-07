@@ -1,1 +1,23 @@
 * Base Server
+Is a personal test template for the *gonew* command from go toolchain,
+with the major configurations i usually make on each project adding:
+- env File
+- Makefile
+- Dockerfile
+- docker-compose
+- metrics endpoint
+- and static file server
+it's just a test*
+
+**  Basic Usage
+For starting using this template, is needed to have go installed in
+the system with at leat 1.20 and make sure *gonew* is present
+#+begin_src shell
+  gonew github.com/maximotejeda/baseserver github.com/example/simpleserver
+#+end_src
+this command will create a new folder in the place where is called
+with the path of ./simpleserver
+#+begin_src shell
+  cd ./simpleserver
+#+end_src
+after that the file structure of the project will be present on the folder.
