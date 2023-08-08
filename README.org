@@ -12,12 +12,12 @@ with the major configurations i usually make on each project adding:
 **  Basic Usage
 For starting using this template, is needed to have go installed in
 the system with at leat 1.20 and make sure *gonew* is present
-#+begin_src shell
+#+begin_src sh
   gonew github.com/maximotejeda/baseserver github.com/example/simpleserver
 #+end_src
 this command will create a new folder in the place where is called
 with the path of /./simpleserver/
-#+begin_src shell
+#+begin_src sh
   cd ./simpleserver
 #+end_src
 after that the file structure of the project will be present on the folder.
@@ -34,3 +34,56 @@ address where you intend to run the server.
 ADDR=
 PORT=8181
 #+end_example
+** MakeFile
+I made a few rules for quick command execution of test build and
+create images with and without debug.
+*** Variables
+ - OS:
+   Is the os in which the Makefile is executed
+ - ARCH:
+   Is the architecture of the system where the Makefile is executed
+ - OOSS:
+   Is a list of build OS targets to create various build on different
+   OS
+ - ARCHS:
+   List of different architectures to buid the binaries, i user RPI so
+   i buid for AMD64 and ARMv8
+ - DEBUG:
+   Unused variable
+ - SERVICE:
+   Name that will be assigned to the final bin
+ - VERSION:
+   Version to assign to bin
+ - CONTAINERS:
+   container service available for the system i usually use Docker or
+   Podman without this the make file will not be completed
+   
+*** Rules
+ - build-image:
+   Build the image ready for deploy on a Container Service
+ - run-image:
+   Build the image of the actual changes on the project and un it
+   with the compose file with env set on the .env file.
+ - build-image-debug:
+   Build the image with the dlv set on the image and waiting on port
+   4000 for debugin
+ - run-image-debug:
+   Build the debugin image and run it with variables set on the .env
+   files
+ - run-local:
+   Build the binary on the ./bin folder and run it directly with out
+   image
+ - build:
+   Build the binary in the ./bin folder
+ - test:
+   Test all test files in the project
+ - clean:
+   Clean the changes made by the make file on the project ./bin etc.
+ - clean-image:
+   Delete all the resources from the container service running.
+** Dockerfile
+Will use multistage build to make the image over go:1.20 and copy the
+resultant binary on a debian image with a entry point of //server/.
+The debug version Will make the same but downloading *dlv* and setting
+flags for debug on the bin that will be waiting on the port 4000.
+
