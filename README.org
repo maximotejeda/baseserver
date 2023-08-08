@@ -87,3 +87,19 @@ resultant binary on a debian image with a entry point of //server/.
 The debug version Will make the same but downloading *dlv* and setting
 flags for debug on the bin that will be waiting on the port 4000.
 
+** docker-compose
+The compose file is set to create the server container with the ports
+set by the .env file and pass .env file as env variables on creation
+for the server, also create a container with an instance of prometheus
+without ports set because is not accesed directly and chaging a basic
+configuration file, the last container created bny the compose file is
+a grafana container instance with direct access to prometheus with
+ports 3000:3000 and default config set.
+
+** Static File Server
+To be able to serve files like images, fonts, js and css, i created a
+basic static file server that will serve files under the staic folder
+/./static/ fo we can access for exemple a route like
+/localhost:8181/static/css/index.css/ if the file exists under the path
+/./static/css/index.css/ folders static, css, and file index.css must be
+created or exists for this to work.
