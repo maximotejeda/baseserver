@@ -11,19 +11,19 @@ with the major configurations i usually make on each project adding:
 
 **  Basic Usage
 For starting using this template, is needed to have go installed in
-the system with at leat 1.20 and make sure *gonew* is present
+the system with at leat *1.20* and make sure *gonew* is present
 #+begin_src sh
   gonew github.com/maximotejeda/baseserver github.com/example/simpleserver
 #+end_src
 this command will create a new folder in the place where is called
-with the path of /./simpleserver/
+with the path of *./simpleserver*
 #+begin_src sh
   cd ./simpleserver
 #+end_src
 after that the file structure of the project will be present on the folder.
 ** .env File
-That file come with a simple configuration, where you set the port and
-address where you intend to run the server.
+That file come with a simple configuration, where you set the *port* and
+*address* where you intend to run the *service*.
 #+name: file-contents
 #+BEGIN_SRC sh :wrap example :results output :exports both
  cat ./.env
@@ -38,68 +38,68 @@ PORT=8181
 I made a few rules for quick command execution of test build and
 create images with and without debug.
 *** Variables
- - OS:
+ - *OS*:
    Is the os in which the Makefile is executed
- - ARCH:
+ - *ARCH*:
    Is the architecture of the system where the Makefile is executed
- - OOSS:
+ - *OOSS*:
    Is a list of build OS targets to create various build on different
    OS
- - ARCHS:
+ - *ARCHS*:
    List of different architectures to buid the binaries, i user RPI so
    i buid for AMD64 and ARMv8
- - DEBUG:
+ - *DEBUG*:
    Unused variable
- - SERVICE:
+ - *SERVICE*:
    Name that will be assigned to the final bin
- - VERSION:
+ - *VERSION*:
    Version to assign to bin
- - CONTAINERS:
+ - *CONTAINERS*:
    container service available for the system i usually use Docker or
    Podman without this the make file will not be completed
    
 *** Rules
- - build-image:
+ - *build-image* :
    Build the image ready for deploy on a Container Service
- - run-image:
+ - *run-image*:
    Build the image of the actual changes on the project and un it
    with the compose file with env set on the .env file.
- - build-image-debug:
+ - *build-image-debug*:
    Build the image with the dlv set on the image and waiting on port
    4000 for debugin
- - run-image-debug:
+ - *run-image-debug*:
    Build the debugin image and run it with variables set on the .env
    files
- - run-local:
+ - *run-local*:
    Build the binary on the ./bin folder and run it directly with out
    image
- - build:
+ - *build*:
    Build the binary in the ./bin folder
- - test:
+ - *test*:
    Test all test files in the project
- - clean:
+ - *clean*:
    Clean the changes made by the make file on the project ./bin etc.
- - clean-image:
+ - *clean-image*:
    Delete all the resources from the container service running.
 ** Dockerfile
-Will use multistage build to make the image over go:1.20 and copy the
-resultant binary on a debian image with a entry point of //server/.
+Will use multistage build to make the image over *go:1.20* and copy the
+resultant binary on a debian image with a entry point of */server*.
 The debug version Will make the same but downloading *dlv* and setting
-flags for debug on the bin that will be waiting on the port 4000.
+flags for debug on the bin that will be waiting on the *port 4000*.
 
 ** docker-compose
-The compose file is set to create the server container with the ports
+Compose create the *server* container with the ports
 set by the .env file and pass .env file as env variables on creation
-for the server, also create a container with an instance of prometheus
+for the server, also create a container with an instance of *prometheus*
 without ports set because is not accesed directly and chaging a basic
-configuration file, the last container created bny the compose file is
-a grafana container instance with direct access to prometheus with
-ports 3000:3000 and default config set.
+configuration file, the last container created by the compose file is
+a *grafana* container instance with direct access to prometheus with
+ports *3000:3000* and default config set.
 
 ** Static File Server
 To be able to serve files like images, fonts, js and css, i created a
 basic static file server that will serve files under the staic folder
-/./static/ fo we can access for exemple a route like
-/localhost:8181/static/css/index.css/ if the file exists under the path
-/./static/css/index.css/ folders static, css, and file index.css must be
+*./static* fo we can access for exemple a route like
+*localhost:8181/static/css/index.css* if the file exists under the path
+*./static/css/index.css* folders *static*, *css*, and file *index.css* must be
 created or exists for this to work.
